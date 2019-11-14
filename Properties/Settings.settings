@@ -1,0 +1,26 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
+			  GeneratedClassNamespace="InternetProxySettings.Properties" GeneratedClassName="Settings">
+	<Profiles />
+	<Settings>
+		<Setting Name="ProxyHost" Type="System.String" Scope="User">
+			<Value Profile="(Default)">phproxy1</Value>
+		</Setting>
+		<Setting Name="ProxyPort" Type="System.Int32" Scope="User">
+			<Value Profile="(Default)">80</Value>
+		</Setting>
+		<Setting Name="InternetSettingsHive" Type="System.String" Scope="User">
+			<Value Profile="(Default)">Software\Microsoft\Windows\CurrentVersion\Internet Settings</Value>
+		</Setting>
+		<Setting Name="ProxyOverride" Type="System.String" Scope="User">
+			<Value Profile="(Default)">*.parker.corp;*.us.parker.corp;*.parker.com;172.29.*.*</Value>
+		</Setting>
+		<Setting Name="IsEnabled" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="IsLocalBypassed" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+	</Settings>
+</SettingsFile>

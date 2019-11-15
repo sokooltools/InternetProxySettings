@@ -98,6 +98,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\image1.png" />
+    <Content Include="Images\image2.png" />
     <Content Include="InternetProxySettings.ico" />
     <Content Include="license.txt" />
   </ItemGroup>

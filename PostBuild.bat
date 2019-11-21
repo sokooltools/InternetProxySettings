@@ -2,7 +2,7 @@
 
 if "%5" NEQ "" (goto:SKIP)
 
-title DevTools: Post-Build
+title SokoolTools: Post-Build
 
 @echo ===============================================================================================================
 @echo = (c) 2012-2019 SokoolTools.
@@ -10,7 +10,7 @@ title DevTools: Post-Build
 @echo = This batch file is used for post-build configuration and should be called directly from the Visual Studio 
 @echo = project's [Post-Build] event command-line using the following syntax:
 @echo =
-@echo = "$(ProjectDir)PostBuild.bat" "$(ConfigurationName)" "$(SolutionDir)" "$(ProjectName)" "$(TargetDir)" "$(TargetName)"
+@echo = "$(ProjectDir)Postbuild.bat" "$(ConfigurationName)" "$(SolutionDir)" "$(ProjectName)" "$(TargetDir)" "$(TargetName)"
 @echo =
 @echo ===============================================================================================================
 @echo.
@@ -52,6 +52,13 @@ echo ===========================================================================
 
 echo.
 
+net session >nul 2>&1
+if errorlevel 1 (
+	echo WARNING!!! This step could not be performed since 'Admin' permissions are required.
+	echo ^(You need to restart Visual Studio as an administrator...^)
+	GOTO:EOF
+)
+
 if %Configuration% EQU Debug (
 	CALL:DO_DEBUG_SPECIFIC_TASKS
 ) else (
@@ -69,30 +76,12 @@ GOTO:EOF
 :: +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 :DO_DEBUG_SPECIFIC_TASKS
 
-net session >nul 2>&1
-if errorlevel 1 (
-	echo WARNING!!! This step could not be performed since 'Admin' permissions are required.
-	echo ^(You need to restart Visual Studio as an administrator...^)
-	GOTO:EOF
-)
-
 echo ======================================================================================
-echo = Copy the target files to the "%%PROGRAMFILES(X86)%%\DevTools\.." folder. 
+echo = Copy the target files to the "%%ProgramFiles(X86)%%\SokoolTools\.." folder. 
 echo ======================================================================================
 echo.
-set src="%TargetPath%.*"
-set dst="%PROGRAMFILES(X86)%\DevTools\%ProjectName%\*"
-echo  Copying %src%
-echo       to %dst%
-echo    (Note: only new or modified files are copied.)
-xcopy /y/q/d %src%  %dst%
-echo.
-echo ======================================================================================
-echo = Copy the 'Setup' files to the "%%PROGRAMFILES(X86)%%\DevTools\.." folder.
-echo ======================================================================================
-echo.
-set src="%ProjectDir%Setup\*.*"
-set dst="%PROGRAMFILES(x86)%\DevTools\%ProjectName%\*"
+set src="%TargetDir%*.*"
+set dst="%ProgramFiles(x86)%\SokoolTools\%ProjectName%\*"
 echo  Copying %src%
 echo       to %dst%
 echo    (Note: only new or modified files are copied.)
@@ -104,5 +93,9 @@ GOTO:EOF
 :: +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 :DO_RELEASE_SPECIFIC_TASKS
 echo.
-echo -- No 'Release' specific tasks required. --
+CALL:DO_DEBUG_SPECIFIC_TASKS
+del %dst%.pdb
+del %dst%.xml
 GOTO:EOF
+
+:: +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

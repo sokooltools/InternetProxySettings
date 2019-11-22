@@ -94,8 +94,8 @@ GOTO:EOF
 :DO_RELEASE_SPECIFIC_TASKS
 echo.
 CALL:DO_DEBUG_SPECIFIC_TASKS
-del %dst%.pdb
-del %dst%.xml
+if exist %dst%.pdb del/q %dst%.pdb
+if exist %dst%.xml del/q %dst%.xml
 GOTO:EOF
 
 :: +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
